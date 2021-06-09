@@ -18,13 +18,13 @@ public class EmployeeService {
 	public Iterable<Employee> listAll() {
 		return repo.findAll();
 	}
-	
+
 	public long count() {
 		return repo.count();
 	}
 
 	public Employee get(Integer id) {
-		return repo.findById(id).get();
+		return repo.findById(id).orElseThrow();
 	}
 
 	public Employee saveEmloyee(Employee employee) {
@@ -49,6 +49,12 @@ public class EmployeeService {
 		updateEmployee.setCreatedDate(employee.getCreatedDate());
 		updateEmployee.setUpdatedDate(employee.getUpdatedDate());
 		return repo.save(updateEmployee);
+	}
+
+	public Employee updateEmployee(int id, Employee empolyee) {
+		repo.findById(id).orElseThrow();
+		empolyee.setId(id);
+		return repo.save(empolyee);
 	}
 
 }
